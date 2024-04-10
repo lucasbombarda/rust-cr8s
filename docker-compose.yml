@@ -1,0 +1,20 @@
+services:
+  postgres:
+    image: postgres:latest
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=app_db
+    command: ["postgres", "-c", "log_statement=all"]
+
+  redis:
+    image: redis:latest
+
+  app:
+    build: .
+    environment:
+      - DATABASE_URL=postgres://postgres:postgres@postgres:5432/app_db
+    ports:
+      - 8000:8000
+    volumes:
+      - ./:/app/
