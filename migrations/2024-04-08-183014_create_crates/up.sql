@@ -4,6 +4,6 @@ CREATE TABLE crates (
     code VARCHAR(64) NOT NULL,
     name VARCHAR(128) NOT NULL,
     version VARCHAR(64) NOT NULL,
-    description TEXT NOT NULL,
+    description TEXT,
     created_at TIMESTAMP NOT NULL DEFAULT NOW()
 );

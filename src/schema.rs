@@ -10,7 +10,7 @@ diesel::table! {
         name -> Varchar,
         #[max_length = 64]
         version -> Varchar,
-        description -> Text,
+        description -> Nullable<Text>,
         created_at -> Timestamp,
     }
 }
@@ -26,4 +26,7 @@ diesel::table! {
 
 diesel::joinable!(crates -> rustaceans (rustacean_id));
 
-diesel::allow_tables_to_appear_in_same_query!(crates, rustaceans,);
+diesel::allow_tables_to_appear_in_same_query!(
+    crates,
+    rustaceans,
+);
