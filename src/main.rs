@@ -1,6 +1,5 @@
-use rocket_db_pools::{Connection, Database};
 use repositories::RustaceanRepository;
-
+use rocket_db_pools::{Connection, Database};
 
 mod models;
 mod repositories;
@@ -12,7 +11,9 @@ struct DbConn(rocket_db_pools::diesel::PgPool);
 
 #[rocket::get("/rustaceans")]
 async fn get_rustaceans(mut db: Connection<DbConn>) {
-    RustaceanRepository::find_multiple(&mut db, 100).await.unwrap();
+    RustaceanRepository::find_multiple(&mut db, 100)
+        .await
+        .unwrap();
 }
 
 #[rocket::main]
