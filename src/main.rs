@@ -1,4 +1,5 @@
 use rocket_db_pools::Database;
+use rocket_routes::rustaceans;
 
 mod models;
 mod repositories;
@@ -15,11 +16,11 @@ async fn main() {
         .mount(
             "/",
             rocket::routes![
-                rocket_routes::rustaceans::get_rustaceans,
-                rocket_routes::rustaceans::view_rustacean,
-                rocket_routes::rustaceans::create_rustacean,
-                rocket_routes::rustaceans::update_rustacean,
-                rocket_routes::rustaceans::delete_rustacean,
+                rustaceans::get_rustaceans,
+                rustaceans::view_rustacean,
+                rustaceans::create_rustacean,
+                rustaceans::update_rustacean,
+                rustaceans::delete_rustacean,
             ],
         )
         .attach(DbConn::init())
