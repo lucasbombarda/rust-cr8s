@@ -11,4 +11,5 @@ rocket ={ version = "0.5", features = ["json"] }
 rocket_db_pools = { version = "0.1", features = ["diesel_postgres"] }
 diesel = {version = "2", features = ["chrono"]}
 diesel-async = { version = "0.4", features = ["postgres"] }
-chrono = { version = "0.4" }
+chrono = { version = "0.4", features = ["serde"] }
+serde = "1.0"
