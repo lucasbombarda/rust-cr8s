@@ -2,11 +2,8 @@ use crate::models::NewRustacean;
 use crate::models::Rustacean;
 use crate::repositories::RustaceanRepository;
 use rocket::http::Status;
-use rocket::response::status::Custom;
-use rocket::response::status::NoContent;
-use rocket::serde::json::json;
-use rocket::serde::json::Json;
-use rocket::serde::json::Value;
+use rocket::response::status::{Custom, NoContent};
+use rocket::serde::json::{json, Json, Value};
 use rocket_db_pools::Connection;
 
 use crate::DbConn;
