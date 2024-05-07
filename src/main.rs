@@ -21,6 +21,7 @@ async fn main() {
                 crates::view_crate,
                 crates::create_crate,
                 crates::update_crate,
+                crates::delete_crate,
             ],
         )
         .attach(rocket_routes::DbConn::init())
