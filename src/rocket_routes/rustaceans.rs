@@ -35,7 +35,7 @@ pub async fn create_rustacean(
         .map_err(|_| Custom(Status::InternalServerError, json!("Error")))
 }
 
-#[rocket::put("/rustaceans/<id>", format = "json", data = "<rustacean>")]
+#[rocket::put("/rustacean/<id>", format = "json", data = "<rustacean>")]
 pub async fn update_rustacean(
     mut db: Connection<DbConn>,
     id: i32,

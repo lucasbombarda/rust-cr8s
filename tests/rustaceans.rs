@@ -88,7 +88,7 @@ fn test_update_rustacean() {
 
     let rustacean: Value = response.json().unwrap();
     let response = client
-        .put(format!("{}/rustaceans/{}", BASE_URL, rustacean["id"]))
+        .put(format!("{}/rustacean/{}", BASE_URL, rustacean["id"]))
         .json(&json!({
             "name": "Test update rustacean 2",
             "email": "updated@test.com"
@@ -108,4 +108,26 @@ fn test_update_rustacean() {
             "created_at": rustacean["created_at"]
         })
     );
+}
+
+#[test]
+fn test_delete_rustacean() {
+    let client = Client::new();
+    let url = format!("{}/rustaceans", BASE_URL);
+    let response = client
+        .post(url)
+        .json(&json!({
+            "name": "Test delete rustacean",
+            "email": "test@test.com",
+        }))
+        .send()
+        .unwrap();
+    assert_eq!(response.status(), StatusCode::CREATED);
+
+    let rustacean: Value = response.json().unwrap();
+    let response = client
+        .delete(format!("{}/rustacean/{}", BASE_URL, rustacean["id"]))
+        .send()
+        .unwrap();
+    assert_eq!(response.status(), StatusCode::NO_CONTENT);
 }
