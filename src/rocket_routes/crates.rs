@@ -1,7 +1,7 @@
 use rocket::http::Status;
-use rocket::response::status::NoContent;
 use rocket::response::status::Custom;
-use rocket::serde::json::{json, Value, Json};
+use rocket::response::status::NoContent;
+use rocket::serde::json::{json, Json, Value};
 use rocket_db_pools::Connection;
 
 use crate::models::{Crate, NewCrate};
@@ -24,7 +24,6 @@ pub async fn view_crate(mut db: Connection<DbConn>, id: i32) -> Result<Value, Cu
         .map_err(|_| Custom(Status::NotFound, json!("Crate not found")))
 }
 
-
 #[rocket::post("/crates", format = "json", data = "<new_crate>")]
 pub async fn create_crate(
     mut db: Connection<DbConn>,
@@ -35,7 +34,6 @@ pub async fn create_crate(
         .map(|n_crate| Custom(Status::Created, json!(n_crate)))
         .map_err(|_| Custom(Status::InternalServerError, json!("Error")))
 }
-
 
 #[rocket::put("/crates/<id>", format = "json", data = "<a_crate>")]
 pub async fn update_crate(
@@ -50,10 +48,7 @@ pub async fn update_crate(
 }
 
 #[rocket::delete("/crates/<id>")]
-pub async fn delete_crate(
-    mut db: Connection<DbConn>,
-    id: i32,
-) -> Result<NoContent, Custom<Value>> {
+pub async fn delete_crate(mut db: Connection<DbConn>, id: i32) -> Result<NoContent, Custom<Value>> {
     CrateRepository::delete(&mut db, id)
         .await
         .map(|_| NoContent)

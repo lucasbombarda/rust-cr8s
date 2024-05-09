@@ -8,7 +8,6 @@ use rocket_db_pools::Connection;
 
 use crate::rocket_routes::DbConn;
 
-
 #[rocket::get("/rustaceans")]
 pub async fn get_rustaceans(mut db: Connection<DbConn>) -> Result<Value, Custom<Value>> {
     RustaceanRepository::find_multiple(&mut db, 100)

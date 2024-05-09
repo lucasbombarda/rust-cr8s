@@ -88,8 +88,8 @@ fn test_update_rustacean() {
 
     let rustacean: Value = response.json().unwrap();
     let response = client
-            .put(format!("{}/rustaceans/{}", BASE_URL, rustacean["id"]))
-            .json(&json!({
+        .put(format!("{}/rustaceans/{}", BASE_URL, rustacean["id"]))
+        .json(&json!({
             "name": "Test update rustacean 2",
             "email": "updated@test.com"
         }))

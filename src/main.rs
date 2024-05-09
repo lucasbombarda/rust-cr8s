@@ -1,5 +1,5 @@
-use rocket_routes::{crates, rustaceans};
 use rocket_db_pools::Database;
+use rocket_routes::{crates, rustaceans};
 
 mod models;
 mod repositories;

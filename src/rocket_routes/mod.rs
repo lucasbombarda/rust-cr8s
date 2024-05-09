@@ -1,6 +1,5 @@
-pub mod rustaceans;
 pub mod crates;
-
+pub mod rustaceans;
 
 #[derive(rocket_db_pools::Database)]
 #[database("postgres")]
