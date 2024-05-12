@@ -1,7 +1,23 @@
-use reqwest::{blocking::Client, StatusCode};
+use reqwest::{
+    blocking::{Client, Response},
+    StatusCode,
+};
 use rocket::serde::json::serde_json::{json, Value};
 
 const BASE_URL: &str = "http://127.0.0.1:8000";
+
+fn create_test_rustacean(client: &Client) -> Response {
+    let url = format!("{}/rustaceans", BASE_URL);
+    let response = client
+        .post(url)
+        .json(&json!({
+            "name": "Test",
+            "email": "test@test.com"
+        }))
+        .send()
+        .unwrap();
+    response
+}
 
 #[test]
 fn test_get_rustaceans() {
@@ -15,16 +31,7 @@ fn test_get_rustaceans() {
 #[test]
 fn test_create_rustacean() {
     let client = Client::new();
-    let url = format!("{}/rustaceans", BASE_URL);
-    let response = client
-        .post(url)
-        .json(&json!({
-            "name": "Test create rustacean",
-            "email": "test@test.com"
-        }))
-        .send()
-        .unwrap();
-
+    let response = create_test_rustacean(&client);
     assert_eq!(response.status(), StatusCode::CREATED);
 
     let rustacean: Value = response.json().unwrap();
@@ -32,7 +39,7 @@ fn test_create_rustacean() {
         rustacean,
         json!({
             "id": rustacean["id"],
-            "name": "Test create rustacean",
+            "name": "Test",
             "email": "test@test.com",
             "created_at": rustacean["created_at"]
         })
@@ -42,15 +49,7 @@ fn test_create_rustacean() {
 #[test]
 fn test_view_rustacean() {
     let client = Client::new();
-    let url = format!("{}/rustaceans", BASE_URL);
-    let response = client
-        .post(url)
-        .json(&json!({
-            "name": "Test view rustacean",
-            "email": "test@test.com"
-        }))
-        .send()
-        .unwrap();
+    let response = create_test_rustacean(&client);
 
     assert_eq!(response.status(), StatusCode::CREATED);
 
@@ -65,7 +64,7 @@ fn test_view_rustacean() {
         rustacean,
         json!({
             "id": rustacean["id"],
-            "name": "Test view rustacean",
+            "name": "Test",
             "email": "test@test.com",
             "created_at": rustacean["created_at"]
         })
@@ -75,22 +74,14 @@ fn test_view_rustacean() {
 #[test]
 fn test_update_rustacean() {
     let client = Client::new();
-    let url = format!("{}/rustaceans", BASE_URL);
-    let response = client
-        .post(url)
-        .json(&json!({
-            "name": "Test update rustacean",
-            "email": "test@test.com"
-        }))
-        .send()
-        .unwrap();
+    let response = create_test_rustacean(&client);
     assert_eq!(response.status(), StatusCode::CREATED);
 
     let rustacean: Value = response.json().unwrap();
     let response = client
         .put(format!("{}/rustacean/{}", BASE_URL, rustacean["id"]))
         .json(&json!({
-            "name": "Test update rustacean 2",
+            "name": "Test update",
             "email": "updated@test.com"
         }))
         .send()
@@ -103,7 +94,7 @@ fn test_update_rustacean() {
         rustacean,
         json!({
             "id": rustacean["id"],
-            "name": "Test update rustacean 2",
+            "name": "Test update",
             "email": "updated@test.com",
             "created_at": rustacean["created_at"]
         })
@@ -113,15 +104,7 @@ fn test_update_rustacean() {
 #[test]
 fn test_delete_rustacean() {
     let client = Client::new();
-    let url = format!("{}/rustaceans", BASE_URL);
-    let response = client
-        .post(url)
-        .json(&json!({
-            "name": "Test delete rustacean",
-            "email": "test@test.com",
-        }))
-        .send()
-        .unwrap();
+    let response = create_test_rustacean(&client);
     assert_eq!(response.status(), StatusCode::CREATED);
 
     let rustacean: Value = response.json().unwrap();
