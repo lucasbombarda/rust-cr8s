@@ -19,6 +19,11 @@ fn create_test_rustacean(client: &Client) -> Response {
     response
 }
 
+fn delete_test_rustacean(client: &Client, rustacean: Value) {
+    let url = format!("{}/rustacean/{}", BASE_URL, rustacean["id"]);
+    client.delete(url).send().unwrap();
+}
+
 #[test]
 fn test_get_rustaceans() {
     let client = Client::new();
@@ -44,6 +49,8 @@ fn test_create_rustacean() {
             "created_at": rustacean["created_at"]
         })
     );
+
+    delete_test_rustacean(&client, rustacean);
 }
 
 #[test]
@@ -69,6 +76,8 @@ fn test_view_rustacean() {
             "created_at": rustacean["created_at"]
         })
     );
+
+    delete_test_rustacean(&client, rustacean);
 }
 
 #[test]
@@ -99,6 +108,8 @@ fn test_update_rustacean() {
             "created_at": rustacean["created_at"]
         })
     );
+
+    delete_test_rustacean(&client, rustacean);
 }
 
 #[test]
